@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0023)http://magapp.zxip.com/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>APP下载页面</title>
+    <link rel="stylesheet" type="text/css" href="resources/g.css">
+    <link rel="stylesheet" type="text/css" href="resources/download.css">
+    <link type="text/css" rel="stylesheet" href="chrome-extension://pioclpoplcdbaefihamjohnefbikjilc/content.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>微信下载引导</title>
+    <style type="text/css">
+        /*核心css*/
+        .wxtip{background: rgba(0,0,0,0.8); text-align: center; position: fixed; left:0; top: 0; width: 100%; height: 100%; z-index: 998; display: none;}
+        .wxtip-icon{width: 52px; height: 67px; background: url(resources/weixin-tip.png) no-repeat; display: block; position: absolute; right: 30px; top: 20px;}
+        .wxtip-txt{padding-top: 107px; color: #fff; font-size: 16px; line-height: 1.5;}
+    </style>
+</head>
+<body class="appdownload-body">
+
+<div class="mb-stars"></div>
+<div class="page-bg-btm mobile"></div>
+
+<div class="appdownload-wrap">
+    <div class="appdownload-logo">
+        <img class="appdownload-logo-icon" src="resources/icon.png" width="80" height="80">
+        <p class="appname">金沙娱乐</p>
+    </div>
+    <!--提示：页面不存在-->
+    <p class="appdownload-note hidden">点击下面链接下载客户端，查看更多精彩内容!!!</p>
+    <!--提示：暂不支持的机型-->
+    <div class="appdownload-btns" id="divDownload-ios" style="display: none;">
+        <!--<a class="btn item-ios" href="itms-services:///?action=download-manifest&url=https://raw.githubusercontent.com/q351941406/488679798/master/PropertyList.plist" target="_blank">-->
+        <a class="btn item-ios" id="a-ios" target="_blank" onClick="my_click()">
+            <span class="ico ico-ios"></span>
+            <span class="txt">iPhone版</span>
+        </a>
+    </div>
+    <div class="appdownload-btns" id="divDownload-android" style="display: none;">
+        <!--<a class="btn item-android" href="https://github.com/q351941406/488679798/releases/download/1.0/mgm_1.1_20180707.apk">-->
+        <a class="btn item-android" id="a-android" target="_blank" onClick="my_click()">
+            <span class="ico ico-android"></span>
+            <span class="txt">安卓版</span>
+        </a>
+    </div>
+
+    <!--<span class="appdownload-check-erwei">查看二维码</span>-->
+    <p class="appdownload-copyright">Copyright ©  All Rights Reserved</p>
+
+
+    <div class="appdownload-erwei-overlay" style="display: none;">
+        <div class="container">
+            <p>扫描二维码下载</p>
+            <img src="resources/1451458631463625.png" width="112" height="112" alt="">
+        </div>
+    </div>
+
+
+
+    <div class="wxtip" id="JweixinTip" style="display: none;">
+        <span class="wxtip-icon"></span>
+        <p class="wxtip-txt">点击右上角<br/>选择在浏览器中打开</p>
+    </div>
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="resources/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+    var android = document.getElementById("divDownload-android"),
+        ios = document.getElementById("divDownload-ios");
+    var u = navigator.userAgent, app = navigator.appVersion;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+    var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if (isAndroid) {
+        //这个是安卓操作系统
+        android.style.display = "block";
+    }
+    if (isIOS) {
+        //这个是ios操作系统
+        ios.style.display = "block";
+    }
+    function my_click(){
+        if (isAndroid) {
+            //这个是安卓操作系统
+            var a = document.getElementById("a-android");
+            a.href = "http://bmob-cdn-16052.b0.upaiyun.com/2018/07/25/952c82af4094ff3f803f5dda0e7f7760.apk";
+            a.setAttribute("onclick",'');
+            //激发标签点击事件OVER
+            a.click("return false");
+        }
+        if (isIOS) {
+            ////这个是ios操作系统
+            //var a = document.getElementById("a-ios");
+            //a.href = "itms-services:///?action=download-manifest&url=https://raw.githubusercontent.com/q351941406/488679798/master/PropertyList.plist";
+            //a.setAttribute("onclick",'');
+            ////激发标签点击事件OVER
+            //a.click("return false");
+
+            window.location = "itms-services:///?action=download-manifest&url=https://raw.githubusercontent.com/zuanqianqianapp/57501708/master/PropertyList.plist";
+        }
+    }
+    function weixinTip(ele){
+        console.log("s")
+        var ua = navigator.userAgent;
+        var isWeixin = !!/MicroMessenger/i.test(ua);
+        if(isWeixin){// 如果是微信
+            ele.onclick=function(e){
+                window.event? window.event.returnValue = false : e.preventDefault();
+                document.getElementById('JweixinTip').style.display='block';
+            }
+            document.getElementById('JweixinTip').onclick=function(){
+                this.style.display='none';
+            }
+        }
+    }
+    var btn1 = document.getElementById('divDownload-android');//下载一
+    weixinTip(btn1);
+    $(function(){
+        var checkErweiBtn = $(".appdownload-check-erwei"),
+            erweiOverlay = $(".appdownload-erwei-overlay"),
+            erweiOverlayContainer = erweiOverlay.find(".container");
+        checkErweiBtn.click(function(){
+            erweiOverlay.fadeIn();
+        });
+        erweiOverlay.click(function(evt){
+            evt.stopPropagation();
+            if( !$(evt.target).hasClass("container") && !$(evt.target).parents().hasClass("container") ){
+                console.log($(evt.target));
+                $(this).fadeOut();
+            }
+        });
+    });
+</script>
+
+
+</body></html>
